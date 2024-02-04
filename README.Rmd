@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Launch binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jcppc/slR/main)
 <!-- badges: end -->
 
-The goal of slR is to ...
+The goal of slR package is to provide researchers with a tool to quickly build Systematic Literature Reviews outputs to include into their documents. These outputs include: data summarizarion and charts, latex tables and more....
 
 ## Installation
 
@@ -38,20 +38,14 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(slR)
 ## basic example code
+
+slr.file <- "/Users/joaocaldeira/Downloads/rstudio-export/SLR_Carol.xlsx"
+authors.file <- "/Users/joaocaldeira/Downloads/rstudio-export/SLR_Authors_Carol.xlsx"
+output.folder <- "/Users/joaocaldeira/Desktop/SLR"
+
+slr <-  slR::build_slr( slr.file )
+authors <-  slR::build_slr( authors.file )
+
+slR::writeComments( slr, output = output.folder )
+slR::writeSummaryTable( authors, output = output.folder )
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
