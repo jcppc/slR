@@ -26,11 +26,10 @@ The goal of slR package is to provide researchers with a tool to quickly build S
 
 You can install the development version of slR from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+```{r installation, eval = FALSE}
+install.packages("devtools")
 
 devtools::install_github("jcppc/slR")
-
 ```
 
 ## Example
@@ -38,8 +37,7 @@ devtools::install_github("jcppc/slR")
 This is a basic example which shows you how to use the library:
 
 ```{r example, eval = FALSE}
-
-## Basic example code
+# Basic example code
 
 library(slR)
 
@@ -52,5 +50,4 @@ authors <-  slR::build_slr( authors.file )
 
 slR::writeComments( slr, output = output.folder )
 slR::writeSummaryTable( authors, output = output.folder )
-
 ```

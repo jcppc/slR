@@ -22,7 +22,7 @@ You can install the development version of slR from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 
 devtools::install_github("jcppc/slR")
 ```
@@ -32,8 +32,7 @@ devtools::install_github("jcppc/slR")
 This is a basic example which shows you how to use the library:
 
 ``` r
-
-## Basic example code
+# Basic example code
 
 library(slR)
 
