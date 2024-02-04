@@ -23,20 +23,23 @@ You can install the development version of slR from
 
 ``` r
 # install.packages("devtools")
+
 devtools::install_github("jcppc/slR")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to use the library:
 
 ``` r
-library(slR)
-## basic example code
 
-slr.file <- "/Users/joaocaldeira/slr.xlsx"
-authors.file <- "/Users/joaocaldeira/authors.xlsx"
-output.folder <- "/Users/joaocaldeira/output"
+## Basic example code
+
+library(slR)
+
+slr.file <- "/users/jcppc/slr-articles.xlsx"
+authors.file <- "/users/jcppc/articles-authors.xlsx"
+output.folder <- "/users/jcppc/output"
 
 slr <-  slR::build_slr( slr.file )
 authors <-  slR::build_slr( authors.file )
