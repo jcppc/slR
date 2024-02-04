@@ -34,9 +34,9 @@ This is a basic example which shows you how to solve a common problem:
 library(slR)
 ## basic example code
 
-slr.file <- "/Users/joaocaldeira/Downloads/rstudio-export/SLR_Carol.xlsx"
-authors.file <- "/Users/joaocaldeira/Downloads/rstudio-export/SLR_Authors_Carol.xlsx"
-output.folder <- "/Users/joaocaldeira/Desktop/SLR"
+slr.file <- "/Users/joaocaldeira/slr.xlsx"
+authors.file <- "/Users/joaocaldeira/authors.xlsx"
+output.folder <- "/Users/joaocaldeira/output"
 
 slr <-  slR::build_slr( slr.file )
 authors <-  slR::build_slr( authors.file )
