@@ -13,7 +13,7 @@ latex_render <- TRUE
 
 # Import and Load fonts
 #load("extrafont")
-#font_import()
+#extrafont::font_import()
 #loadfonts(device="win")       #Register fonts for Windows bitmap output
 #fonts()
 

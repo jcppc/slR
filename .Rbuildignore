@@ -1,3 +1,5 @@
 ^slR\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^README\.Rmd$
+^R/scripts.R

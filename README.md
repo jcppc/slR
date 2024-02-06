@@ -23,8 +23,19 @@ You can install the development version of slR from
 
 ``` r
 install.packages("devtools")
+install.packages("extrafont")
 
 devtools::install_github("jcppc/slR")
+```
+
+## Setup
+
+To properly render the charts, the **extrafont** package should be
+installed and then loaded
+
+``` r
+library(extrafont)
+extrafont::font_import()
 ```
 
 ## Example
@@ -33,7 +44,6 @@ This is a basic example which shows you how to use the library:
 
 ``` r
 # Basic example code
-
 library(slR)
 
 slr.file <- "/users/jcppc/slr-articles.xlsx"
@@ -45,4 +55,5 @@ authors <-  slR::build_slr( authors.file )
 
 slR::writeComments( slr, output = output.folder )
 slR::writeSummaryTable( authors, output = output.folder )
+slR::boxplot_per_year( slr, year.above = 2012, output = output.folder, save.pdf = FALSE )
 ```

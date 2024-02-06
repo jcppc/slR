@@ -8,7 +8,7 @@ source("R/setup.R")
 #' @export
 #'
 #' @examples
-build_slr <- function( filename ) {
+read <- function( filename ) {
 
   slr <-  readxl::read_excel( filename )
 
