@@ -23,18 +23,16 @@ You can install the development version of slR from
 
 ``` r
 install.packages("devtools")
-install.packages("extrafont")
-
 devtools::install_github("jcppc/slR")
 ```
 
 ## Setup
 
 To properly render the charts, the **extrafont** package should be
-installed and then loaded
+installed and fonts imported
 
 ``` r
-library(extrafont)
+install.packages("extrafont")
 extrafont::font_import()
 ```
 
