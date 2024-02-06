@@ -2,13 +2,23 @@ Package: slR
 Title: Accelerate Systematic Literature Reviews visual components production
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(person(given="João", family="Caldeira", email="jcppc@iscte-iul.pt", role = c("cre","aut"),
+           comment = c(ORCID = "0000-0003-0960-0179")))
 Description: Package to deal with the production of visual components for Systematic Literature Reviews.
+URL: https://github.com/jcppc/slR
+BugReports: https://github.com/jcppc/slR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Depends: R (>= 4.3.0)
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+LazyLoad: yes
 Imports: 
+    ggplot2,
+    hrbrthemes,
+    insight,
     readxl,
     utils

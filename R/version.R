@@ -5,6 +5,17 @@
 #'
 #' @examples
 version <- function() {
-  print("slR v.0.0.0.9000")
-  print("Creator: Joao Caldeira")
+
+  version <- paste("Package slR version: ", utils::packageVersion("pmopsR"))
+  authors <- "\nBuilt by: Jo\u00e3o Caldeira"
+  organization <-  "\nBuilt at: Iscte - Instituto Universit\u00e1rio de Lisboa\n"
+
+  insight::print_color(version, "green" )
+  insight::print_color(authors, "black")
+  insight::print_color(organization, "blue")
+
 }
+
+
+
+
