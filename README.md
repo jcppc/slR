@@ -11,14 +11,14 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jcppc/slR/main)
 <!-- badges: end -->
 
-The goal of slR package is to provide researchers with a tool to quickly
-build Systematic Literature Reviews outputs to include into their
-documents. These outputs include: data summarizarion and charts, latex
-tables and more….
+The goal of **slR** package is to provide researchers with a tool to
+quickly build Systematic Literature Reviews outputs to include into
+their documents. These outputs include: data summarizarion and charts,
+latex tables and more….
 
 ## Installation
 
-You can install the development version of slR from
+You can install the development version of **slR** from
 [GitHub](https://github.com/) with:
 
 ``` r
