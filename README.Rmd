@@ -72,6 +72,6 @@ slR::write_graphics( output = output.folder )
  
 # Plots related functions
 
-slR::score_per_year_boxplot( slr, year.above = 2012, output = output.folder, save.pdf = FALSE )
+slR::score_per_year_boxplot( slr, year.above = 2012, output = output.folder, save.pdf = TRUE )
 
 ```
