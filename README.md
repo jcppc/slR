@@ -29,7 +29,7 @@ devtools::install_github("jcppc/slR")
 ## Setup
 
 To properly render the charts, the **extrafont** package should be
-installed and fonts imported
+installed and fonts imported:
 
 ``` r
 install.packages("extrafont")
@@ -48,10 +48,21 @@ slr.file <- "/users/jcppc/slr-articles.xlsx"
 authors.file <- "/users/jcppc/articles-authors.xlsx"
 output.folder <- "/users/jcppc/output"
 
-slr <-  slR::build_slr( slr.file )
-authors <-  slR::build_slr( authors.file )
+slr <-  slR::read( slr.file )
+authors <-  slR::read( authors.file )
 
-slR::writeComments( slr, output = output.folder )
-slR::writeSummaryTable( authors, output = output.folder )
-slR::boxplot_per_year( slr, year.above = 2012, output = output.folder, save.pdf = FALSE )
+# Print the package version
+slR::version()
+
+# Latex related functions
+slR::write_comments( slr, output = output.folder )
+slR::write_authors( authors, output = output.folder )
+slR::write_institutions( authors, output = output.folder )
+slR::write_countries( authors, output = output.folder )
+slR::write_continents( authors, output = output.folder )
+slR::write_articles( slr, output = output.folder )
+slR::write_graphics( output = output.folder )
+ 
+# Plots related functions
+slR::score_per_year_boxplot( slr, year.above = 2012, output = output.folder, save.pdf = FALSE )
 ```

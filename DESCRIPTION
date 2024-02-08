@@ -17,8 +17,10 @@ Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 LazyLoad: yes
 Imports: 
+    dplyr,
     ggplot2,
     hrbrthemes,
     insight,
     readxl,
+    stats,
     utils
