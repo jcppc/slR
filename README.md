@@ -42,6 +42,7 @@ This is a basic example which shows you how to use the library:
 
 ``` r
 # Basic example code
+
 library(slR)
 
 slr.file <- "/users/jcppc/slr-articles.xlsx"
@@ -52,9 +53,11 @@ slr <-  slR::read( slr.file )
 authors <-  slR::read( authors.file )
 
 # Print the package version
+
 slR::version()
 
 # Latex related functions
+
 slR::write_comments( slr, output = output.folder )
 slR::write_authors( authors, output = output.folder )
 slR::write_institutions( authors, output = output.folder )
@@ -64,5 +67,6 @@ slR::write_articles( slr, output = output.folder )
 slR::write_graphics( output = output.folder )
  
 # Plots related functions
+
 slR::score_per_year_boxplot( slr, year.above = 2012, output = output.folder, save.pdf = FALSE )
 ```
