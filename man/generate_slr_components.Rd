@@ -4,18 +4,10 @@
 \alias{generate_slr_components}
 \title{Title}
 \usage{
-generate_slr_components(
-  slr,
-  authors,
-  year.above = 1900,
-  output = ".",
-  save.pdf = TRUE
-)
+generate_slr_components(slr, year.above = 1900, output = ".", save.pdf = TRUE)
 }
 \arguments{
 \item{slr}{The SLR data object to plot data from}
-
-\item{authors}{The SLR data object to plot data from}
 
 \item{year.above}{Filter by year the data on the SLR (default is above 1900)}
 

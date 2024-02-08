@@ -46,13 +46,24 @@ This is a basic example which shows you how to use the library:
 
 library(slR)
 
-slr.file <- "/users/jcppc/slr-articles.xlsx"
-authors.file <- "/users/jcppc/articles-authors.xlsx"
+# Folder to save the generated files
 output.folder <- "/users/jcppc/output"
 
+# Step 1
+# If you have only a bib file with the articles, load this file
+slr.file <- "/users/jcppc/slr-articles.bib"
 slr <-  slR::read( slr.file, output = output.folder )
-articles <- slr[1]
-authors <-  slr[2]
+
+# Step 2
+# Otherwise, if you have the Excel files already created in Step 1, load them
+# Once you do Step 1, you dont' need to run it anymore, because you can always start from Step 2
+slr.file <- "/users/jcppc/slr-articles.xlsx"
+authors.file <- "/users/jcppc/slr-authors.xlsx"
+
+slr = list()
+slr$articles <- slR::read( slr.file, output = output.folder )
+slr$authors <- slR::read( authors.file, output = output.folder )
+
 
 # Print the package version
 
@@ -60,24 +71,30 @@ slR::version()
 
 # Latex related functions
 
-slR::write_comments( articles, output = output.folder )
-slR::write_authors( authors, output = output.folder )
-slR::write_institutions( authors, output = output.folder )
-slR::write_countries( authors, output = output.folder )
-slR::write_continents( authors, output = output.folder )
-slR::write_articles( articles, output = output.folder )
+slR::write_comments( slr$articles, output = output.folder )
+slR::write_authors( slr$authors, output = output.folder )
+slR::write_institutions( slr$authors, output = output.folder )
+slR::write_countries( slr$authors, output = output.folder )
+slR::write_continents( slr$authors, output = output.folder )
+slR::write_articles( slr$articles, output = output.folder )
 slR::write_graphics( output = output.folder )
  
 # Plots related functions
 
-slR::score_per_year_boxplot( articles, output = output.folder )
-slR::score_per_year_barchart( articles, output = output.folder )
-slR::score_per_venue_barchart( articles, output = output.folder )
-slR::score_per_author_barchart( articles, output = output.folder )
-slR::score_per_publication_barchart( articles, output = output.folder )
+slR::score_per_year_boxplot( slr$articles, output = output.folder )
+slR::score_per_year_barchart( slr$articles, output = output.folder )
+slR::score_per_venue_barchart( slr$articles, output = output.folder )
+slR::score_per_author_barchart( slr$articles, output = output.folder )
+slR::score_per_publication_barchart( slr$articles, output = output.folder )
 
 # Generate all components
 
-slR::generate_slr_components( articles, authors, output = output.folder )
-  
+slR::generate_slr_components( slr, output = output.folder )
+
+
+# Add new dimensions to the slr object to reflect the RQs to answer
+# This needs to be done always manually because it depends on your Research Questions
+
+dimensions <- c("Dim1","Dim2","Dim3","Dim4")
+slR::add_dimensions( slr, dimensions, output = output.folder )
 ```

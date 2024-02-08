@@ -161,7 +161,7 @@ score_per_author_barchart <- function( slr, year.above = 1900, output = ".", sav
                    axis.text.y = ggplot2::element_text(size = iscte_text_size ) )
 
   # counts
-  ggp + ggplot2::geom_bar(fill=iscte_palette[2], position = 'dodge', stat='identity') +
+  ggp + ggplot2::geom_bar(fill=iscte_palette[3], position = 'dodge', stat='identity') +
     ggplot2::geom_text(ggplot2::aes(label=values), position=ggplot2::position_dodge(width=0.9), vjust=-0.25)
 
   if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.5, height = 7)
@@ -204,7 +204,7 @@ score_per_publication_barchart <- function( slr, year.above = 1900, output = "."
                    axis.text.y = ggplot2::element_text(size = iscte_text_size ) )
 
   # counts
-  ggp + ggplot2::geom_bar(fill=iscte_palette[2], position = 'dodge', stat='identity') +
+  ggp + ggplot2::geom_bar(fill=iscte_palette[4], position = 'dodge', stat='identity') +
     ggplot2::geom_text(ggplot2::aes(label=values), position=ggplot2::position_dodge(width=0.9), vjust=-0.25)
 
   if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.5, height = 7)

@@ -15,7 +15,3 @@ version <- function() {
   insight::print_color( organization, "blue")
 
 }
-
-
-
-
