@@ -53,7 +53,6 @@ slr <-  slR::read( slr.file )
 authors <-  slR::read( authors.file )
 
 # Print the package version
-
 slR::version()
 
 # Latex related functions
