@@ -34,6 +34,7 @@ installed and fonts imported:
 ``` r
 install.packages("extrafont")
 extrafont::font_import()
+extrafont::loadfonts(device = "all", quiet = TRUE)
 ```
 
 ## Example
