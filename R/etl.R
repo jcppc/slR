@@ -1,5 +1,4 @@
 
-
 getStudiesList <- function( slr, table, dimension )
 {
     for (i in 1:length(unique(slr[[dimension]]))) {

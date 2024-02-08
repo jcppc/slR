@@ -4,10 +4,12 @@
 \alias{read}
 \title{Title}
 \usage{
-read(filename)
+read(filename, output = ".")
 }
 \arguments{
 \item{filename}{the filename for the SLR data}
+
+\item{output}{Folder where to write the Excel file with the articles (default is the current directory - '.')}
 }
 \description{
 Title

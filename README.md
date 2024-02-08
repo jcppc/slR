@@ -50,8 +50,9 @@ slr.file <- "/users/jcppc/slr-articles.xlsx"
 authors.file <- "/users/jcppc/articles-authors.xlsx"
 output.folder <- "/users/jcppc/output"
 
-slr <-  slR::read( slr.file )
-authors <-  slR::read( authors.file )
+slr <-  slR::read( slr.file, output = output.folder )
+articles <- slr[1]
+authors <-  slr[2]
 
 # Print the package version
 
@@ -59,24 +60,24 @@ slR::version()
 
 # Latex related functions
 
-slR::write_comments( slr, output = output.folder )
+slR::write_comments( articles, output = output.folder )
 slR::write_authors( authors, output = output.folder )
 slR::write_institutions( authors, output = output.folder )
 slR::write_countries( authors, output = output.folder )
 slR::write_continents( authors, output = output.folder )
-slR::write_articles( slr, output = output.folder )
+slR::write_articles( articles, output = output.folder )
 slR::write_graphics( output = output.folder )
  
 # Plots related functions
 
-slR::score_per_year_boxplot( slr, output = output.folder )
-slR::score_per_year_barchart( slr, output = output.folder )
-slR::score_per_venue_barchart( slr, output = output.folder )
-slR::score_per_author_barchart( slr, output = output.folder )
-slR::score_per_publication_barchart( slr, output = output.folder )
+slR::score_per_year_boxplot( articles, output = output.folder )
+slR::score_per_year_barchart( articles, output = output.folder )
+slR::score_per_venue_barchart( articles, output = output.folder )
+slR::score_per_author_barchart( articles, output = output.folder )
+slR::score_per_publication_barchart( articles, output = output.folder )
 
 # Generate all components
 
-slR::generate_slr_components( slr, authors, output = output.folder )
+slR::generate_slr_components( articles, authors, output = output.folder )
   
 ```
