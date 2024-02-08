@@ -68,14 +68,14 @@ slR::write_graphics( output = output.folder )
  
 # Plots related functions
 
-slR::score_per_year_boxplot( slr, year.above, output )
-slR::score_per_year_barchart( slr, year.above, output )
-slR::score_per_venue_barchart( slr, year.above, output )
-slR::score_per_author_barchart( slr, year.above, output )
-slR::score_per_publication_barchart( slr, year.above, output )
+slR::score_per_year_boxplot( slr, output = output.folder )
+slR::score_per_year_barchart( slr, output = output.folder )
+slR::score_per_venue_barchart( slr, output = output.folder )
+slR::score_per_author_barchart( slr, output = output.folder )
+slR::score_per_publication_barchart( slr, output = output.folder )
 
 # Generate all components
 
-slR::generate_slr_components( slr, authors, year.above , output )
+slR::generate_slr_components( slr, authors, output = output.folder )
   
 ```
