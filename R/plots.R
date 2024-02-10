@@ -1,5 +1,102 @@
 source("R/setup.R")
 
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+author_per_year <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
+{
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
+  frequency_per_year_dimension( slr, year.above, output, save.pdf, plot.name = "plot-6.pdf", dimension = "Author" )
+}
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+venue_per_year <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
+{
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
+  frequency_per_year_dimension( slr, year.above, output, save.pdf, plot.name = "plot-7.pdf", "Venue" )
+}
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+publication_per_year <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
+{
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
+  frequency_per_year_dimension( slr, year.above, output, save.pdf, plot.name = "plot-8.pdf", "Publication", width = 20 )
+}
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param plot.name Name of the file to plot data into
+#' @param dimension The dimension name to report against
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_dimension_per_year <- function( dimension, slr, year.above = 1900, output = ".", save.pdf = TRUE, plot.name = "new_plot.pdf"  )
+{
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
+  slr_exploded <- slr %>% tidyr::separate_rows( dimension , sep = ",")
+  frequency_per_year_dimension( slr_exploded, year.above, output, save.pdf, plot.name = paste0("plot-",dimension,".pdf"), dimension = dimension )
+}
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param plot.name Name of the file to plot data into
+#' @param dimension The dimension name to report against
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_dimension_frequency <- function( dimension, slr, year.above = 1900, output = ".", save.pdf = TRUE, plot.name = "new_plot.pdf" )
+{
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
+  frequency_plot_per_dimension( slr, year.above, output, save.pdf, plot.name = paste0("plot-freq-",dimension,".pdf"), dimension = dimension )
+}
+
+
 #' Boxplot chart to represent the articles' score per year
 #'
 #' @param slr The SLR data object to plot data from
@@ -14,26 +111,27 @@ source("R/setup.R")
 score_per_year_boxplot <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
 {
 
-plot.name <- "plot-1.pdf"
-slr <-  slr[slr$Year > year.above,]
+  plot.name <- "plot-1.pdf"
+  slr <-  slr$articles
+  slr <-  slr[slr$Year > year.above,]
 
-g <- ggplot2::ggplot( slr , ggplot2::aes(factor(Year),Total) ) +
-     ggplot2::labs(x = "Year") +
-     ggplot2::labs(y = "Score") +
-     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
-     hrbrthemes::theme_ipsum(base_family = iscte_font) +
-     ggplot2::theme( plot.margin = iscte_plot_margins, legend.position="none",
-                     legend.title = ggplot2::element_blank(), panel.grid.major.x = ggplot2::element_blank(),
-                     plot.title = ggplot2::element_text(size = iscte_text_size, vjust = -25),
-                     axis.title.x = ggplot2::element_text(size = iscte_title_size ),
-                     axis.text.x = ggplot2::element_text(size = iscte_text_size ),
-                     axis.title.y = ggplot2::element_text(size = iscte_title_size ),
-                     axis.text.y = ggplot2::element_text(size = iscte_text_size ) )
+  g <- ggplot2::ggplot( slr , ggplot2::aes(factor(Year),Total) ) +
+    ggplot2::labs(x = "\nYear") +
+    ggplot2::labs(y = "Score") +
+    ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme( plot.margin = iscte_plot_margins, legend.position="none",
+                    legend.title = ggplot2::element_blank(), panel.grid.major.x = ggplot2::element_blank(),
+                    plot.title = ggplot2::element_text(size = iscte_text_size, vjust = -25),
+                    axis.title.x = ggplot2::element_text(size = iscte_title_size ),
+                    axis.text.x = ggplot2::element_text(size = iscte_text_size ),
+                    axis.title.y = ggplot2::element_text(size = iscte_title_size ),
+                    axis.text.y = ggplot2::element_text(size = iscte_text_size ) )
 
-g + ggplot2::geom_boxplot(width=0.25, color="black", alpha=0.2) +
+  g + ggplot2::geom_boxplot(width=0.25, color="black", alpha=0.2) +
     ggplot2::geom_violin(data=slr, fill = iscte_palette[9], width=1.2, alpha = 0.6)
 
-if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.5, height = 7)
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.5, height = 7)
 
 }
 
@@ -51,6 +149,7 @@ if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.
 score_per_year_barchart <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
 {
   plot.name <- "plot-2.pdf"
+  slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
 
   myData <- data.frame(
@@ -59,7 +158,7 @@ score_per_year_barchart <- function( slr, year.above = 1900, output = ".", save.
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "Year") +
+    ggplot2::labs(x = "\nYear") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -95,6 +194,7 @@ score_per_year_barchart <- function( slr, year.above = 1900, output = ".", save.
 score_per_venue_barchart <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
 {
   plot.name <- "plot-3.pdf"
+  slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
 
   myData <- data.frame(
@@ -103,7 +203,7 @@ score_per_venue_barchart <- function( slr, year.above = 1900, output = ".", save
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "Year") +
+    ggplot2::labs(x = "\nYear") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -139,6 +239,7 @@ score_per_venue_barchart <- function( slr, year.above = 1900, output = ".", save
 score_per_author_barchart <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
 {
   plot.name <- "plot-4.pdf"
+  slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
 
   myData <- data.frame(
@@ -147,7 +248,7 @@ score_per_author_barchart <- function( slr, year.above = 1900, output = ".", sav
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "Year") +
+    ggplot2::labs(x = "\nYear") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -182,6 +283,7 @@ score_per_author_barchart <- function( slr, year.above = 1900, output = ".", sav
 score_per_publication_barchart <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
 {
   plot.name <- "plot-5.pdf"
+  slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
 
   myData <- data.frame(
@@ -190,7 +292,7 @@ score_per_publication_barchart <- function( slr, year.above = 1900, output = "."
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "Year") +
+    ggplot2::labs(x = "\nYear") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -208,5 +310,58 @@ score_per_publication_barchart <- function( slr, year.above = 1900, output = "."
     ggplot2::geom_text(ggplot2::aes(label=values), position=ggplot2::position_dodge(width=0.9), vjust=-0.25)
 
   if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = 12.5, height = 7)
+
+}
+
+
+frequency_per_year_dimension <- function( slr, year.above, output, save.pdf, plot.name, dimension, width = 12.5 )
+{
+  data <- stats::aggregate(slr, by=list(slr$Year, with(slr, get(dimension)) ), FUN=length)
+
+  g <- ggplot2::ggplot(data, ggplot2::aes(x=as.factor(Group.1), y=Group.2, size=Study, fill=factor(Group.1))) +
+    ggplot2::geom_point(alpha=0.5, shape=21, color="black") +
+    ggplot2::scale_fill_manual(values= sample( iscte_palette, length(data$Group.1), replace = T) ) +
+    ggplot2::scale_size_area( max_size = 20 ) +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme(legend.position="none",
+                   axis.title.x = ggplot2::element_text(size = iscte_title_size ),
+                   axis.text.x = ggplot2::element_text(size = iscte_text_size ),
+                   axis.title.y = ggplot2::element_text(size = iscte_title_size ),
+                   axis.text.y = ggplot2::element_text(size = iscte_text_size )
+    ) +
+    ggplot2::ylab( dimension ) +
+    ggplot2::xlab("\nYear") +
+    ggplot2::geom_text(ggplot2::aes(label=Study), size=4, position=ggplot2::position_dodge(width=0), vjust=0.4)
+
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
+
+}
+
+
+frequency_plot_per_dimension <- function( slr, year.above, output, save.pdf, plot.name, dimension, width = 12.5 )
+{
+  Dimension <- factor(unlist(strsplit( with(slr, get(dimension)), split=",")))
+  SumDimension <- data.frame( group=as.factor(dimension), names = levels(factor(Dimension)), names_latex = paste0("\\textbf{",levels(factor(Dimension)),"}"), values = summary(factor(Dimension)), percent = paste0(round(summary(factor(Dimension))/nrow(slr)*100,2),"\\%"), studies = "", stringsAsFactors = FALSE, row.names = NULL)
+  SumDimension <- dplyr::arrange(SumDimension, -values)
+
+  ggp <- ggplot2::ggplot( SumDimension, ggplot2::aes(x=names,y=values, width=0.5)) +
+    ggplot2::labs(x = "") +
+    ggplot2::labs(y = "") +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme(plot.margin = iscte_plot_margins, legend.position="none",
+                   legend.title = ggplot2::element_blank(),
+                   panel.grid.major.x = ggplot2::element_blank(),
+                   axis.title.x = ggplot2::element_text(size = iscte_title_size,  ),
+                   axis.text.x = ggplot2::element_text(size = iscte_text_size, angle = 45, hjust = 1),
+                   axis.title.y = ggplot2::element_text(size = iscte_title_size ),
+                   axis.text.y = ggplot2::element_text(size = iscte_text_size )  ) +
+                   ggplot2::scale_x_discrete(labels=function(x){sub("\\s", "\n", x)} )
+
+  # counts
+  ggp + ggplot2::geom_bar(fill=iscte_palette[1], position = 'dodge', stat='identity') +
+    ggplot2::geom_text(ggplot2::aes(label=values), position=ggplot2::position_dodge(width=0.9), vjust=-0.25)
+
+
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
 
 }

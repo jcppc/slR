@@ -87,33 +87,89 @@ add_dimensions <- function( slr, dimensions, output = ".")
 #' @param year.above Filter by year the data on the SLR (default is above 1900)
 #' @param output Folder where to write the plots into (default is the current directory - '.')
 #' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param dimensions List of dimensions to generate latex and plots
 #'
 #' @return
 #' @export
 #'
 #' @examples
-generate_slr_components <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE)
+generate_slr_components <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE, dimensions )
 {
 
-  # Latex functions
-  slR::write_comments( slr$articles, output = output.folder )
-  slR::write_authors( slr$authors, output = output.folder )
-  slR::write_institutions( slr$authors, output = output.folder )
-  slR::write_countries( slr$authors, output = output.folder )
-  slR::write_continents( slr$authors, output = output.folder )
-  slR::write_articles( slr$articles, output = output.folder )
-  slR::write_graphics( output = output.folder )
+  suppressWarnings({
 
+  extrafont::loadfonts(device = "all", quiet = TRUE)
+
+  # Latex functions
+
+  slR::write_comments( slr, output = output.folder )
+  slR::write_authors( slr, output = output.folder )
+  slR::write_institutions( slr, output = output.folder )
+  slR::write_countries( slr, output = output.folder )
+  slR::write_continents( slr, output = output.folder )
+  slR::write_articles( slr, output = output.folder )
+  slR::write_sample_table_template( output = output.folder )
+  slR::write_graphics( output = output.folder )
+  if (!missing(dimensions)) slR::generate_slr_dimensions_latex( slr, output = output.folder, dimensions = dimensions )
 
   # Plot functions
-  slR::score_per_year_boxplot( slr$articles, year.above, output, save.pdf )
-  slR::score_per_year_barchart( slr$articles, year.above, output, save.pdf )
-  slR::score_per_venue_barchart( slr$articles, year.above, output, save.pdf )
-  slR::score_per_author_barchart( slr$articles, year.above, output, save.pdf )
-  slR::score_per_publication_barchart( slr$articles, year.above, output, save.pdf )
+
+  slR::score_per_year_boxplot( slr, year.above = year.above, output = output.folder )
+  slR::score_per_year_barchart( slr, year.above = year.above, output = output.folder )
+  slR::score_per_venue_barchart( slr, year.above = year.above, output = output.folder )
+  slR::score_per_author_barchart( slr, year.above = year.above, output = output.folder )
+  slR::score_per_publication_barchart( slr, year.above = year.above, output = output.folder )
+  slR::author_per_year( slr, year.above = year.above, output = output.folder )
+  slR::publication_per_year( slr, year.above = year.above, output = output.folder )
+  slR::venue_per_year( slr, year.above = year.above, output = output.folder )
+  if (!missing(dimensions)) slR::generate_slr_dimensions_plot( slr, output = output.folder, dimensions = dimensions )
+
+  })
 
 }
 
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param dimensions List of dimensions to generate latex and plots
+#'
+#' @return
+#' @export
+#'
+#' @examples
+generate_slr_dimensions_latex <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE, dimensions )
+{
+  dims <- lapply( dimensions, write_frequency_of_dimension, slr = slr, output = output)
+
+}
+
+
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param dimensions List of dimensions to generate latex and plots
+#'
+#' @return
+#' @export
+#'
+#' @examples
+generate_slr_dimensions_plot <- function( slr, year.above = 1900, output = ".", save.pdf = TRUE, dimensions )
+{
+  year <- lapply( dimensions, plot_dimension_per_year, slr = slr, output = output)
+  frequency <-  lapply( dimensions, plot_dimension_frequency, slr = slr, output = output)
+
+  #slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim1.pdf", dimension = "Dim1" )
+  #slR::plot_dimension_frequency( slr, output = output.folder, plot.name = "plot-freq-Dim2.pdf", dimension = "Dim2" )
+
+
+}
 
 
 

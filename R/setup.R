@@ -3,6 +3,7 @@ utils::globalVariables(c("Year", "Total"))
 #palette <- c("#14bfdd", "#80b3d2", "#040404", "#d7d9ce")
 # This is ISCTE NEW palette
 iscte_palette <- c("#14bfb8","#040404", "#d7d9ce", "#0c7489","#13505b","#35524A","#779CAB", "#666666", "#80B3D2", "#373F47")
+#iscte_palette <- sample(base_colors, 100, replace = T)
 iscte_font <- "Times New Roman"
 iscte_title_size <- 16
 iscte_text_size <- 10

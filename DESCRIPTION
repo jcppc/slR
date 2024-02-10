@@ -19,6 +19,7 @@ LazyLoad: yes
 Imports: 
     bib2df,
     dplyr,
+    extrafont,
     ggplot2,
     hrbrthemes,
     insight,
@@ -26,6 +27,7 @@ Imports:
     plyr,
     readxl,
     stats,
+    stringr,
     tidyr,
     tools,
     utils

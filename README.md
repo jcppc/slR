@@ -71,30 +71,61 @@ slR::version()
 
 # Latex related functions
 
-slR::write_comments( slr$articles, output = output.folder )
-slR::write_authors( slr$authors, output = output.folder )
-slR::write_institutions( slr$authors, output = output.folder )
-slR::write_countries( slr$authors, output = output.folder )
-slR::write_continents( slr$authors, output = output.folder )
-slR::write_articles( slr$articles, output = output.folder )
+slR::write_comments( slr, output = output.folder )
+slR::write_authors( slr, output = output.folder )
+slR::write_institutions( slr, output = output.folder )
+slR::write_countries( slr, output = output.folder )
+slR::write_continents( slr, output = output.folder )
+slR::write_articles( slr, output = output.folder )
+slR::write_sample_table_template( output = output.folder )
 slR::write_graphics( output = output.folder )
- 
+
+
 # Plots related functions
 
-slR::score_per_year_boxplot( slr$articles, output = output.folder )
-slR::score_per_year_barchart( slr$articles, output = output.folder )
-slR::score_per_venue_barchart( slr$articles, output = output.folder )
-slR::score_per_author_barchart( slr$articles, output = output.folder )
-slR::score_per_publication_barchart( slr$articles, output = output.folder )
-
-# Generate all components
-
-slR::generate_slr_components( slr, output = output.folder )
-
+slR::score_per_year_boxplot( slr, output = output.folder )
+slR::score_per_year_barchart( slr, output = output.folder )
+slR::score_per_venue_barchart( slr, output = output.folder )
+slR::score_per_author_barchart( slr, output = output.folder )
+slR::score_per_publication_barchart( slr, output = output.folder )
+slR::author_per_year( slr, output = output.folder )
+slR::publication_per_year( slr, output = output.folder )
+slR::venue_per_year( slr, output = output.folder )
 
 # Add new dimensions to the slr object to reflect the RQs to answer
 # This needs to be done always manually because it depends on your Research Questions
 
 dimensions <- c("Dim1","Dim2","Dim3","Dim4")
 slR::add_dimensions( slr, dimensions, output = output.folder )
+
+# Now go back to you Excel file and categorize/fill in your dimensions
+
+# Plots for each dimension
+# Needs to be done for each dimension manually
+
+slR::plot_dimension_frequency( slr, output = output.folder, plot.name = "plot-freq-Dim1.pdf", dimension = "Dim1" )
+slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim1.pdf", dimension = "Dim1" )
+slR::plot_dimension_frequency( slr, output = output.folder, plot.name = "plot-freq-Dim2.pdf", dimension = "Dim2" )
+slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim2.pdf", dimension = "Dim2" )
+
+# Latex tables with frequencies per dimension
+# Needs to be done for each dimension
+
+slR::write_frequency_of_dimension( slr, output = output.folder, dimension = "Dim1" )
+slR::write_frequency_of_dimension( slr, output = output.folder, dimension = "Dim2" )
+
+
+# Generate all default components ( except the ones dependent on the dimensions created )
+
+slR::generate_slr_dimensions_latex( slr, output = output.folder, dimensions = dimensions )
+
+
+# Generate all default components ( except the ones dependent on the dimensions created )
+
+slR::generate_slr_components( slr, output = output.folder )
+
+# Generate all components, including the ones related with the dimensions
+
+dimensions <- c("Dim1","Dim2","Dim3","Dim4")
+slR::generate_slr_components( slr, output = output.folder, dimensions = dimensions )
 ```
