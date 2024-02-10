@@ -90,8 +90,8 @@ Once the **Excel** files are completed with the articles evaluation
 details, these files should be loaded to finish the generation of the
 **SLR** components (**latex** and **plot** files).
 
-**Note:** You can skip **Step 1** if you have already the articles
-metadata **Excel** files already created.
+**Note:** You can skip **Step 1** if you have the articles metadata
+**Excel** files already created.
 
 ``` r
 # Step 2
@@ -108,10 +108,10 @@ slr$authors <- slR::read( authors.file, output = output.folder )
 ### Step 3 - Generate **SLR** Components
 
 After loading the files articles and authors files, you can generate all
-the **SLR** components at once. You need to specify the dimensions for
-which you want to generate the components, but this parameter is
-optional. Once generated, you should have on the folder specified in
-output.folder, multiple **latex** and **plot** files with all the
+the **SLR** components at once. You need to specify the **dimensions**
+for which you want to generate the components, but this parameter is
+*optional*. Once generated, you should have on the folder specified in
+**output.folder**, multiple **latex** and **plot** files with all the
 statistics.
 
 ``` r
