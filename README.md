@@ -43,9 +43,9 @@ This is a basic example which shows you how to use the library:
 
 ### Step 1 - Load *Bib* file
 
-This step is responsible to load a bib file with the articles you are
-evaluating on your SLR and export the metadata in two Excel spreadsheets
-for later manual completion.
+This step is responsible to load a **bib** file with the articles you
+are evaluating on your **SLR** and export the metadata in two **Excel**
+spreadsheets for later manual completion.
 
 ``` r
 # Basic example code
@@ -69,10 +69,12 @@ slr <-  slR::read( slr.file, output = output.folder )
 
 #### Step 1.1 - Add new dimensions
 
-This step helps you to add immediately new dimensions to the Excel file.
-These dimensions should reflect the Research Questions you are trying to
-answer. **Note:** You can skip **Step 1.1** if you go directly and edit
-the articles Excel file and add new columns to it.
+This step helps you to add immediately new dimensions to the **Excel**
+file. These dimensions should reflect the Research Questions you are
+trying to answer.
+
+**Note:** You can skip **Step 1.1** if you go directly and edit the
+articles **Excel** file and add new columns to it.
 
 ``` r
 # Add a list of new dimensions to the slr object to reflect the RQs to answer
@@ -84,10 +86,12 @@ slR::add_dimensions( slr, dimensions, output = output.folder )
 
 ### Step 2 - Load **Excel** files
 
-Once the Excel files are completed with the articles eveluation details,
-the two Excel files should be loaded to finish the generation of the SLR
-components (latex and plot files). **Note:** You can skip **Step 1** if
-you have already the articles metadata Excel files already created.
+Once the **Excel** files are completed with the articles evaluation
+details, these files should be loaded to finish the generation of the
+**SLR** components (**latex** and **plot** files).
+
+**Note:** You can skip **Step 1** if you have already the articles
+metadata **Excel** files already created.
 
 ``` r
 # Step 2
