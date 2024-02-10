@@ -41,19 +41,55 @@ extrafont::loadfonts(device = "all", quiet = TRUE)
 
 This is a basic example which shows you how to use the library:
 
+### Step 1 - Load *Bib* file
+
+This step is responsible to load a bib file with the articles you are
+evaluating on your SLR and export the metadata in two Excel spreadsheets
+for later manual completion.
+
 ``` r
 # Basic example code
 
 library(slR)
 
-# Folder to save the generated files
+# Define the folder where to save the generated files
 output.folder <- "/users/jcppc/output"
 
 # Step 1
 # If you have only a bib file with the articles, load this file
 slr.file <- "/users/jcppc/slr-articles.bib"
+
+# This function will generate two Excel files based on the data from the bib file
 slr <-  slR::read( slr.file, output = output.folder )
 
+# Files created in folder output.folder
+# slr-articles.xlsx"
+# slr-authors.xlsx"
+```
+
+#### Step 1.1 - Add new dimensions
+
+This step helps you to add immediately new dimensions to the Excel file.
+These dimensions should reflect the Research Questions you are trying to
+answer. **Note:** You can skip **Step 1.1** if you go directly and edit
+the articles Excel file and add new columns to it.
+
+``` r
+# Add a list of new dimensions to the slr object to reflect the RQs to answer
+# This needs to be done always manually because it depends on your Research Questions
+
+dimensions <- c("Dim1","Dim2","Dim3","Dim4")
+slR::add_dimensions( slr, dimensions, output = output.folder )
+```
+
+### Step 2 - Load **Excel** files
+
+Once the Excel files are completed with the articles eveluation details,
+the two Excel files should be loaded to finish the generation of the SLR
+components (latex and plot files). **Note:** You can skip **Step 1** if
+you have already the articles metadata Excel files already created.
+
+``` r
 # Step 2
 # Otherwise, if you have the Excel files already created in Step 1, load them
 # Once you do Step 1, you dont' need to run it anymore, because you can always start from Step 2
@@ -63,8 +99,31 @@ authors.file <- "/users/jcppc/slr-authors.xlsx"
 slr = list()
 slr$articles <- slR::read( slr.file, output = output.folder )
 slr$authors <- slR::read( authors.file, output = output.folder )
+```
 
+### Step 3 - Generate **SLR** Components
 
+After loading the files articles and authors files, you can generate all
+the **SLR** components at once. You need to specify the dimensions for
+which you want to generate the components, but this parameter is
+optional. Once generated, you should have on the folder specified in
+output.folder, multiple **latex** and **plot** files with all the
+statistics.
+
+``` r
+slR::generate_slr_components( slr, output = output.folder, dimensions = dimensions )
+
+# Because in this case dimensions are omitted, this function generates all default components ( except the ones dependent on the dimensions created )
+# slR::generate_slr_components( slr, output = output.folder )
+```
+
+### Extras
+
+There are multiple functions at your disposal that you can execute
+individually when you need to update/generate just some parts of the
+**SLR**.
+
+``` r
 # Print the package version
 
 slR::version()
@@ -92,16 +151,9 @@ slR::author_per_year( slr, output = output.folder )
 slR::publication_per_year( slr, output = output.folder )
 slR::venue_per_year( slr, output = output.folder )
 
-# Add new dimensions to the slr object to reflect the RQs to answer
-# This needs to be done always manually because it depends on your Research Questions
-
-dimensions <- c("Dim1","Dim2","Dim3","Dim4")
-slR::add_dimensions( slr, dimensions, output = output.folder )
-
-# Now go back to you Excel file and categorize/fill in your dimensions
 
 # Plots for each dimension
-# Needs to be done for each dimension manually
+# Needs to be done for each dimension
 
 slR::plot_dimension_frequency( slr, output = output.folder, plot.name = "plot-freq-Dim1.pdf", dimension = "Dim1" )
 slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim1.pdf", dimension = "Dim1" )
@@ -114,18 +166,14 @@ slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim
 slR::write_frequency_of_dimension( slr, output = output.folder, dimension = "Dim1" )
 slR::write_frequency_of_dimension( slr, output = output.folder, dimension = "Dim2" )
 
-
-# Generate all default components ( except the ones dependent on the dimensions created )
+# Generate all latex components, including the ones related with the dimensions
+# Remove parameter dimensions to skip them
 
 slR::generate_slr_dimensions_latex( slr, output = output.folder, dimensions = dimensions )
 
-
-# Generate all default components ( except the ones dependent on the dimensions created )
-
-slR::generate_slr_components( slr, output = output.folder )
-
-# Generate all components, including the ones related with the dimensions
+# Generate all plot components, including the ones related with the dimensions
+# Remove parameter dimensions to skip them
 
 dimensions <- c("Dim1","Dim2","Dim3","Dim4")
-slR::generate_slr_components( slr, output = output.folder, dimensions = dimensions )
+slR::generate_slr_dimensions_plot( slr, output = output.folder, dimensions = dimensions )
 ```

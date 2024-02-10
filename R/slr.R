@@ -57,10 +57,12 @@ read.bib <- function( filename, output ) {
 #'
 #' @examples
 read <- function( filename, output = ".") {
+  suppressWarnings({
   extension <- tools::file_ext( filename )
   if (extension == "bib") { return( read.bib( filename, output ) )  }
   else if (extension == "xlsx") { return( readxl::read_excel( filename ) ) }
   else {  message("\nInvalid file type. Use xlsx or bib files.\n") ; return( NULL )}
+  })
 }
 
 #' Title
