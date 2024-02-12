@@ -110,7 +110,7 @@ generate_slr_components <- function( slr, year.above = 1900, output = ".", save.
   slR::write_countries( slr, output = output.folder )
   slR::write_continents( slr, output = output.folder )
   slR::write_articles( slr, output = output.folder )
-  slR::write_sample_table_template( output = output.folder )
+  #slR::write_sample_table_template( output = output.folder )
   slR::write_graphics( output = output.folder )
   if (!missing(dimensions)) slR::generate_slr_dimensions_latex( slr, output = output.folder, dimensions = dimensions )
 
