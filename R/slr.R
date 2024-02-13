@@ -35,7 +35,7 @@ read.bib <- function( filename, output ) {
                       Authors = sapply(bib$AUTHOR, paste, collapse = "#"),
                       DOI = bib$DOI,
                       Total = round(stats::rnorm(nrow(bib), mean = 10, sd = 2),0) )
-  slr$Venue <-  plyr::revalue(slr$Venue, c("ARTICLE"="Journal", "INPROCEEDINGS"="Conference", "BOOK"="Book", "WORKSHOP"="Workshop", "TECHREPORT"="Report"), warn_missing = F )
+  slr$Venue <-  plyr::revalue(slr$Venue, c("INBOOK"="Book Section","INCOLLECTION"="Book Section","ARTICLE"="Journal", "INPROCEEDINGS"="Conference", "BOOK"="Book", "WORKSHOP"="Workshop", "TECHREPORT"="Report"), warn_missing = F )
   slr[is.na(slr)] <- 0
   openxlsx::write.xlsx( slr, file = paste0(output, "/", "slr-articles.xlsx"), colNames = TRUE)
   authors <- explode.authors( slr, output )

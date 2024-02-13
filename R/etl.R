@@ -20,7 +20,7 @@ frequency <- function( slr, year.above, output, save.pdf, plot.name, dimension )
   slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
 
-  Dimension <- factor(unlist(strsplit( with(slr, get(dimension)), split=",")))
+  Dimension <- factor(stringr::str_squish(unlist(strsplit( with(slr, get(dimension)), split=","))))
 
   slr_exploded <- slr %>% tidyr::separate_rows( dimension , sep = ",")
 
