@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^R/scripts.R
+articles-authors.xlsx
+slr-articles.xlsx

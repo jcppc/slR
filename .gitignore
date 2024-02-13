@@ -1,1 +1,6 @@
 .Rproj.user
+.DS_Store
+.Rhistory
+articles-authors.xlsx
+slr-articles.xlsx
+R/scripts.R
