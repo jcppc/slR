@@ -167,11 +167,6 @@ generate_slr_dimensions_plot <- function( slr, year.above = 1900, output = ".", 
 {
   year <- lapply( dimensions, plot_dimension_per_year, slr = slr, output = output)
   frequency <-  lapply( dimensions, plot_dimension_frequency, slr = slr, output = output)
-
-  #slR::plot_dimension_per_year( slr, output = output.folder, plot.name = "plot-Dim1.pdf", dimension = "Dim1" )
-  #slR::plot_dimension_frequency( slr, output = output.folder, plot.name = "plot-freq-Dim2.pdf", dimension = "Dim2" )
-
-
 }
 
 
