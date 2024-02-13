@@ -13,6 +13,7 @@ getStudiesList <- function(table, dimension, slr_exploded)
 }
 
 
+
 frequency <- function( slr, year.above, output, save.pdf, plot.name, dimension )
 {
 

@@ -19,6 +19,7 @@ explode.authors <- function( slr, output ) {
   return( authors )
 }
 
+
 read.bib <- function( filename, output ) {
 
   #path <- system.file( filename, package = "bib2df" )
