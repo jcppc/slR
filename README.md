@@ -154,6 +154,9 @@ slR::score_per_publication_barchart( slr, output = output.folder )
 slR::author_per_year( slr, output = output.folder )
 slR::publication_per_year( slr, output = output.folder )
 slR::venue_per_year( slr, output = output.folder )
+slR::frequency_per_continent(slr, output = output.folder )
+slR::frequency_per_country(slr, output = output.folder )
+slR::frequency_per_institution( slr, output = output.folder )
 
 
 # Plots for each dimension

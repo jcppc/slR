@@ -2,6 +2,9 @@
 
 export(add_dimensions)
 export(author_per_year)
+export(frequency_per_continent)
+export(frequency_per_country)
+export(frequency_per_institution)
 export(generate_slr_components)
 export(generate_slr_dimensions_latex)
 export(generate_slr_dimensions_plot)

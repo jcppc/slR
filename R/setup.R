@@ -18,3 +18,42 @@ latex_render <- TRUE
 #loadfonts(device="win")       #Register fonts for Windows bitmap output
 #fonts()
 
+iscte_palette_discrete <- function( pal = iscte_palette , reverse = FALSE) { if (reverse) pal <- rev(pal); return ( grDevices::colorRampPalette( pal ) ) }
+
+iscte_palette_continuous <- function( size = 100,  pal = iscte_palette ) { return ( iscte_palette_discrete( pal )( size) )  }
+
+iscte_palette_gradient <- function( size = 1000, pal = iscte_palette ) { return ( iscte_palette_discrete( pal )( size ) )  }
+
+
+scale_color_iscte <- function( palette = iscte_palette, discrete = TRUE, reverse = FALSE ) {
+
+  pal <- iscte_palette_discrete( palette, reverse )
+
+  if (discrete) {
+    ggplot2::discrete_scale("colour", "iscte_discrete" , palette = pal )
+  } else {
+    ggplot2::scale_color_gradientn(colours = pal(100) )
+  }
+
+}
+
+scale_fill_iscte <- function( palette = iscte_palette, discrete = TRUE, reverse = FALSE ) {
+
+  pal <- iscte_palette_discrete( palette, reverse )
+
+  if (discrete) {
+    ggplot2::discrete_scale("fill", "iscte_discrete" , palette = pal )
+  } else {
+    ggplot2::scale_color_gradientn(colours = pal(100) )
+  }
+
+}
+
+scale_gradient_iscte <- function( palette = iscte_palette, reverse = FALSE ) {
+
+  pal <- iscte_palette_discrete( palette, reverse )
+
+  ggplot2::scale_color_gradientn(colours = pal(1000) )
+
+}
+

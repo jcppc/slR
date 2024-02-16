@@ -365,3 +365,171 @@ frequency_plot_per_dimension <- function( slr, year.above, output, save.pdf, plo
   if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
 
 }
+
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param plot.name Plot name
+#' @param width Plot Width
+#'
+#' @return
+#' @export
+#'
+#' @examples
+frequency_per_continent <- function( slr, year.above, output, save.pdf = T, plot.name = "SumContinents.pdf", width = 12.5 )
+
+{
+
+  table <-  slr$authors
+  n_studies <- length(unique(table$Study))
+  dataset <- unique(table[c("Continent","Study")])
+  studies <- data.frame( studies = stats::aggregate(Study ~ Continent, data = dataset, toString)[2])
+  colnames(studies)[1] <- c("studies")
+  SumContinents <- data.frame(  group=as.factor("Continents"), names = levels(factor(dataset$Continent)), names_latex = paste0("\\textbf{",levels(factor(dataset$Continent)),"}"),   values = summary(factor(dataset$Continent)), percent = paste0(round(summary(factor(dataset$Continent))/n_studies*100,2),"\\%"), studies = studies, stringsAsFactors = FALSE, row.names = NULL)
+  SumContinents <- dplyr::arrange(SumContinents, -values)
+
+  SumContinents$fraction <- SumContinents$values / n_studies
+  # Compute the cumulative percentages (top of each rectangle)
+  SumContinents$ymax = cumsum(SumContinents$fraction)
+  # Compute the bottom of each rectangle
+  SumContinents$ymin = c(0, head(SumContinents$ymax, n=-1))
+  # Compute label position
+  SumContinents$labelPosition <- (SumContinents$ymax + SumContinents$ymin) / 2
+  # Compute a good label
+  SumContinents$label <- paste0(gsub(" "," ",SumContinents$names), " : ", SumContinents$values, "\n(", round(SumContinents$fraction * 100 , 2), "%)")
+
+  cont <- ggplot2::ggplot(SumContinents, ggplot2::aes(ymax=ymax, ymin=ymin, xmax=4.3, xmin=0.5, fill=names)) +
+    ggplot2::geom_rect() +
+    ggplot2::geom_text( x=6.2, ggplot2::aes(y=labelPosition, label=label, color=names), size=4 ) + # x here controls label position (inner / outer)
+    #scale_fill_brewer(palette=3) +
+    scale_fill_iscte() +
+    scale_color_iscte() +
+    #scale_color_brewer(palette=3) +
+    ggplot2::coord_polar(theta="y") +
+    ggplot2::xlim(c(-3, 6)) +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme_void() +
+    ggplot2::theme(legend.position = "none")
+
+
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
+
+}
+
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param plot.name Plot name
+#' @param width Plot Width
+#'
+#' @return
+#' @export
+#'
+#' @examples
+frequency_per_country <- function( slr, year.above, output, save.pdf = T, plot.name = "SumCountries.pdf", width = 12.5 )
+
+{
+
+  suppressWarnings({
+
+  table <-  slr$authors
+  table$Study <- paste0("[", table$Study , "]")
+  n_studies <- length(unique(table$Study))
+  dataset <- unique(table[c("Country","Study")])
+  studies <- data.frame( studies = stats::aggregate(Study ~ Country, data = dataset, toString)[2])
+  colnames(studies)[1] <- c("studies")
+  SumCountries <- data.frame(  group=as.factor("Countries"), names = levels(factor(dataset$Country)), names_latex = paste0("\\textbf{",levels(factor(dataset$Country)),"}"),   values = summary(factor(dataset$Country)), percent = paste0(round(summary(factor(dataset$Country))/n_studies*100,2),"\\%"), studies = studies, stringsAsFactors = FALSE, row.names = NULL)
+  SumCountries <- dplyr::arrange(SumCountries, -values)
+
+  country_plot <- ggplot2::ggplot(SumCountries, ggplot2::aes(x=reorder(names,values), y=values)) +
+    ggplot2::labs(x = "") +
+    ggplot2::labs(y = "") +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme(plot.margin = iscte_plot_margins, legend.position="none", legend.title = ggplot2::element_blank(), panel.grid.major.x = ggplot2::element_blank(),
+          axis.title.x = ggplot2::element_text(size = iscte_title_size ),
+          axis.text.x = ggplot2::element_text(size = iscte_text_size ),
+          axis.title.y = ggplot2::element_text(size = iscte_title_size ),
+          axis.text.y = ggplot2::element_text(size = iscte_text_size )
+          #axis.title.x=element_blank(),
+          #axis.text.x=element_blank(),
+          #axis.ticks.x=element_blank()
+    )
+  #xlab("Year")
+  #ylab("")
+
+
+  # counts
+  country_plot <- country_plot + ggplot2::geom_bar(fill=iscte_palette[3], position = 'dodge', stat='identity') + ggplot2::coord_flip() +
+    ggplot2::geom_text( ggplot2::aes(label=values), position=ggplot2::position_dodge(width=1.9), hjust=-.35)
+
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
+
+  })
+
+}
+
+
+#' Title
+#'
+#' @param slr The SLR data object to plot data from
+#' @param year.above Filter by year the data on the SLR (default is above 1900)
+#' @param output Folder where to write the plots into (default is the current directory - '.')
+#' @param save.pdf Whether to save or not the plot to pdf file (default is TRUE)
+#' @param plot.name Plot name
+#' @param width Plot Width
+#' @param frequency.above Plot only Institutions with more than (n) studies
+#'
+#' @return
+#' @export
+#'
+#' @examples
+frequency_per_institution <- function( slr, year.above, output, save.pdf = T, frequency.above = 1, plot.name = "SumInstitutions.pdf", width = 12.5 )
+
+{
+  suppressWarnings({
+
+  table <-  slr$authors
+  table$Study <- paste0("[", table$Study , "]")
+  n_studies <- length(unique(table$Study))
+  dataset <- unique(table[c("Institution","Study")])
+  studies <- data.frame( studies = stats::aggregate(Study ~ Institution, data = dataset, toString)[2])
+  colnames(studies)[1] <- c("studies")
+  SumInstitutions <- data.frame(  group=as.factor("Countries"), names = levels(factor(dataset$Institution)), names_latex = paste0("\\textbf{",levels(factor(dataset$Institution)),"}"),   values = summary(factor(dataset$Institution)), percent = paste0(round(summary(factor(dataset$Institution))/n_studies*100,2),"\\%"), studies = studies, stringsAsFactors = FALSE, row.names = NULL)
+  SumInstitutions <- dplyr::arrange(SumInstitutions, -values)
+
+  country_plot <- ggplot2::ggplot(SumInstitutions[SumInstitutions$values > frequency.above, ], ggplot2::aes(x=reorder(names,values), y=values)) +
+    ggplot2::labs(x = "") +
+    ggplot2::labs(y = "") +
+    hrbrthemes::theme_ipsum(base_family = iscte_font) +
+    ggplot2::theme(plot.margin = iscte_plot_margins, legend.position="none", legend.title = ggplot2::element_blank(), panel.grid.major.x = ggplot2::element_blank(),
+                   axis.title.x = ggplot2::element_text(size = iscte_title_size ),
+                   axis.text.x = ggplot2::element_text(size = iscte_text_size ),
+                   axis.title.y = ggplot2::element_text(size = iscte_title_size ),
+                   axis.text.y = ggplot2::element_text(size = iscte_text_size )
+                   #axis.title.x=element_blank(),
+                   #axis.text.x=element_blank(),
+                   #axis.ticks.x=element_blank()
+    )
+  #xlab("Year")
+  #ylab("")
+
+
+  # counts
+  country_plot <- country_plot + ggplot2::geom_bar(fill=iscte_palette[4], position = 'dodge', stat='identity') + ggplot2::coord_flip() +
+    ggplot2::geom_text( ggplot2::aes(label=values), position=ggplot2::position_dodge(width=1.9), hjust=-.35)
+
+  if ( save.pdf )  ggplot2::ggsave( paste0( output, "/" , plot.name ), width = width, height = 7)
+
+  })
+
+}
+
+

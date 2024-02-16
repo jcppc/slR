@@ -125,6 +125,9 @@ generate_slr_components <- function( slr, year.above = 1900, output = ".", save.
   slR::author_per_year( slr, year.above = year.above, output = output.folder )
   slR::publication_per_year( slr, year.above = year.above, output = output.folder )
   slR::venue_per_year( slr, year.above = year.above, output = output.folder )
+  slR::frequency_per_continent(slr, year.above = year.above, output = output.folder )
+  slR::frequency_per_country(slr, year.above = year.above, output = output.folder )
+  slR::frequency_per_institution( slr, year.above = year.above, output = output.folder )
   if (!missing(dimensions)) slR::generate_slr_dimensions_plot( slr, output = output.folder, dimensions = dimensions )
 
   })
