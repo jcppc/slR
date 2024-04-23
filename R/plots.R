@@ -73,6 +73,7 @@ plot_dimension_per_year <- function( dimension, slr, year.above = 1900, output =
   slr <-  slr$articles
   slr <-  slr[slr$Year > year.above,]
   slr_exploded <- slr %>% tidyr::separate_rows( dimension , sep = ",")
+  slr_exploded[[dimension]] <- trimws(slr_exploded[[dimension]])
   frequency_per_year_dimension( slr_exploded, year.above, output, save.pdf, plot.name = paste0("plot-",dimension,".pdf"), dimension = dimension )
 }
 
@@ -203,7 +204,7 @@ score_per_venue_barchart <- function( slr, year.above = 1900, output = ".", save
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "\nYear") +
+    ggplot2::labs(x = "\nVenue") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -248,7 +249,7 @@ score_per_author_barchart <- function( slr, year.above = 1900, output = ".", sav
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "\nYear") +
+    ggplot2::labs(x = "\nAuthor") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -292,7 +293,7 @@ score_per_publication_barchart <- function( slr, year.above = 1900, output = "."
   )
 
   ggp <- ggplot2::ggplot(myData,ggplot2::aes(x=names,y=values)) +
-    ggplot2::labs(x = "\nYear") +
+    ggplot2::labs(x = "\nPublication") +
     ggplot2::labs(y = "Frequency") +
     ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
@@ -340,19 +341,22 @@ frequency_per_year_dimension <- function( slr, year.above, output, save.pdf, plo
 
 frequency_plot_per_dimension <- function( slr, year.above, output, save.pdf, plot.name, dimension, width = 12.5 )
 {
-  Dimension <- factor(unlist(strsplit( with(slr, get(dimension)), split=",")))
+  Dimension <- factor(stringr::str_squish(unlist(strsplit( with(slr, get(dimension)), split=","))))
   SumDimension <- data.frame( group=as.factor(dimension), names = levels(factor(Dimension)), names_latex = paste0("\\textbf{",levels(factor(Dimension)),"}"), values = summary(factor(Dimension)), percent = paste0(round(summary(factor(Dimension))/nrow(slr)*100,2),"\\%"), studies = "", stringsAsFactors = FALSE, row.names = NULL)
   SumDimension <- dplyr::arrange(SumDimension, -values)
 
   ggp <- ggplot2::ggplot( SumDimension, ggplot2::aes(x=names,y=values, width=0.5)) +
-    ggplot2::labs(x = "") +
-    ggplot2::labs(y = "") +
+    ggplot2::labs(x = paste0("\n", dimension)) +
+    ggplot2::labs(y = "Frequency") +
+    ggplot2::ggtitle(paste0('Studies',"\n(n=",nrow(slr),")")) +
     hrbrthemes::theme_ipsum(base_family = iscte_font) +
     ggplot2::theme(plot.margin = iscte_plot_margins, legend.position="none",
                    legend.title = ggplot2::element_blank(),
                    panel.grid.major.x = ggplot2::element_blank(),
-                   axis.title.x = ggplot2::element_text(size = iscte_title_size,  ),
+                   plot.title = ggplot2::element_text(size = iscte_text_size, vjust = -25),
+                   axis.title.x = ggplot2::element_text(size = iscte_title_size  ),
                    axis.text.x = ggplot2::element_text(size = iscte_text_size, angle = 45, hjust = 1),
+                   #axis.text.x = ggplot2::element_text(size = iscte_text_size ),
                    axis.title.y = ggplot2::element_text(size = iscte_title_size ),
                    axis.text.y = ggplot2::element_text(size = iscte_text_size )  ) +
                    ggplot2::scale_x_discrete(labels=function(x){sub("\\s", "\n", x)} )
